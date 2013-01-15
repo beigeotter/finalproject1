@@ -1,0 +1,34 @@
+<h1>What do you want to do?</h1>
+<div id="tag_cloud">
+  <% tag_cloud Entry.tag_counts, %w[s m l] do |tag, css_class|  %>
+    <%= button_to tag.name, tag_path(tag.name), class: css_class, :method => "get" %>
+  <% end %>
+<table>
+  <tr>
+    <th>Activity</th>
+    <th> Tags</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @entries.each do |entry| %>
+  <tr>
+    <td><%= entry.activity %></td>
+    <td><%= raw entry.tag_list.map { |t| link_to t, tag_path(t) }.join(',') %></td>
+    <td><%= link_to 'Show', entry %></td>
+    <td><%= button_to "SHOW", entry, :method => "get" %><td>
+    <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
+    <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<hr noshade size=7>
+
+<h1>What did you do?</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', entries_path %>
